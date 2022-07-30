@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 # vim: set fenc=utf8 ts=4 sw=4 et :
 #
 # Layer 2 network neighbourhood discovery tool
@@ -58,9 +58,13 @@ def scan_and_print_neighbors(net, interface, timeout=5):
 
 
 def main(interface_to_scan=None):
-    if os.geteuid() != 0:
-        print('You need to be root to run this script', file=sys.stderr)
-        sys.exit(1)
+    if os.name == 'nt':
+        print('Windows System Identified')
+    
+    else:
+        if os.geteuid() != 0:
+            print('You need to be root to run this script', file=sys.stderr)
+            sys.exit(1)
 
     for network, netmask, _, interface, address, _ in scapy.config.conf.route.routes:
 
